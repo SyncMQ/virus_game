@@ -1,18 +1,14 @@
-using tgow.Actors;
-
-namespace tgow; 
+namespace tgow.Actors;
 
 public class Ai : Speler {
+    private readonly Random _random;
 
-    /*public List<Tuple<int, int, int, int>> GenereerGeldigeZetten(int startRij, int startKolom) {
-        
-    }*/
+    public Ai(Type type, Bord bord) : base(type, bord) {
+        _random = new Random();
+    }
+
+    public new void DoeZet() {
+        throw new NotImplementedException();
+    }
     
-    public void CheckGevaarZoneDupli() {
-        
-    }
-
-    public void CheckGevaarZone() {
-        
-    }
 }

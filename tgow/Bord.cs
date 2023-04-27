@@ -17,7 +17,7 @@ public class Bord {
         for (var y = 0; y < _rij; y++) {
             var rij = "";
             for (var x = 0; x < _kolom; x++) {
-                rij += Vakken[y, x].Waarde;
+                rij += Vakken[y, x].GetWaarde();
             }
             Console.WriteLine(rij);
         }
@@ -27,10 +27,10 @@ public class Bord {
         Console.Clear();
         
         for (var rij = 0; rij < _rij; rij++) {
-            Vakken[rij, 0] = new Vak($"[ {rij} ] ", Type.Zijkant);
+            Vakken[rij, 0] = new Vak(rij.ToString(), Type.Zijkant);
             for (var kolom = 1; kolom < _rij; kolom++) {
                 if (rij == 0) {
-                    Vakken[rij, kolom] = new Vak($"[ {kolom} ]", Type.Zijkant);
+                    Vakken[rij, kolom] = new Vak(kolom.ToString(), Type.Zijkant);
                 }
                 else {
                     Vakken[rij, kolom] = new Vak("[ _ ]", Type.Leeg);
@@ -55,4 +55,6 @@ public class Bord {
             }
         }
     }
+    
+    
 }

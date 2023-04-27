@@ -9,5 +9,9 @@ public class Vak {
         Type = type;
     }
     
+    public string GetWaarde() {
+        return Type == Type.Zijkant ? $"[ {Waarde} ]" : Waarde;
+    }
+
     
 }
