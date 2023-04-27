@@ -16,7 +16,7 @@ public class Spel {
 
     public void InitialiseerSpel() {
         Bord.InitialiseerBord();
-        Bord.InitialiseerSpelers("[ H ]" ,  "[ B ]");
+        Bord.InitialiseerSpelers("w" ,  "[ B ]");
         Spelers[0] = new Mens(Type.Hoodie, Bord);
         Spelers[1] = new Ai(Type.BaggySweater,Bord);
     }
