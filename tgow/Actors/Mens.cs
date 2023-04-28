@@ -18,36 +18,34 @@ public class Mens : Speler {
                 _bord.Vakken[y2, x2].Type = _bord.Vakken[y1, x1].Type;
                 _bord.Vakken[y2, x2].Waarde = _bord.Vakken[y1, x1].Waarde;
                 TotaalBezet += 1;
-                InfecteerBaggy(y2,x2);
+                Infecteer(y2,x2);
                 break;
             case 1 when Math.Abs(x2 - x1) == 1 || Math.Abs(x2 - x1) == 0:
                 _bord.Vakken[y2, x2].Type = _bord.Vakken[y1, x1].Type;
                 _bord.Vakken[y2, x2].Waarde = _bord.Vakken[y1, x1].Waarde;
                 TotaalBezet += 1;
-                InfecteerBaggy(y2,x2);
+                Infecteer(y2,x2);
                 break;
             case 2 when Math.Abs(x2 - x1) <= 2:
                 _bord.Vakken[y2, x2].Type = _bord.Vakken[y1, x1].Type;
                 _bord.Vakken[y2, x2].Waarde = _bord.Vakken[y1, x1].Waarde;
                 _bord.Vakken[y1, x1].Type = Type.Leeg;
                 _bord.Vakken[y1, x1].Waarde = "[ _ ]";
-                InfecteerBaggy(y2,x2);
+                Infecteer(y2,x2);
                 break;
             case 0 when Math.Abs(x2 - x1) == 2:
                 _bord.Vakken[y2, x2].Type = _bord.Vakken[y1, x1].Type;
                 _bord.Vakken[y2, x2].Waarde = _bord.Vakken[y1, x1].Waarde;
                 _bord.Vakken[y1, x1].Type = Type.Leeg;
                 _bord.Vakken[y1, x1].Waarde = "[ _ ]";
-                InfecteerBaggy(y2,x2);
+                Infecteer(y2,x2);
                 break;
             default:
-                Console.WriteLine("Zet niet geldig! Probeer het opnieuw");
-                Thread.Sleep(1000);
                 break;
         }
     }
 
-    private void InfecteerBaggy(int y2, int x2) {
+    private void Infecteer(int y2, int x2) {
         int[] dy = {-1, -1, -1, 0, 1, 1, 1, 0};
         int[] dx = {-1, 0, 1, 1, 1, 0, -1, -1};
 
@@ -55,13 +53,13 @@ public class Mens : Speler {
             var newY = y2 + dy[i];
             var newX = x2 + dx[i];
 
-            if (!IsValidCoordinate(newY, newX) || _bord.Vakken[newY, newX].Type != Type.BaggySweater) continue;
+            if (!IsGeldigeCoordinaat(newY, newX) || _bord.Vakken[newY, newX].Type != Type.BaggySweater) continue;
             _bord.Vakken[newY, newX].Type = Type.Hoodie;
             _bord.Vakken[newY, newX].Waarde = "[ H ]";
         }
     }
     
-    private bool IsValidCoordinate(int y, int x) {
+    private bool IsGeldigeCoordinaat(int y, int x) {
         return y >= 0 && y < _bord.Vakken.GetLength(0) && x >= 0 && x < _bord.Vakken.GetLength(1);
     }
 }

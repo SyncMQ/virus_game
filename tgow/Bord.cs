@@ -55,6 +55,15 @@ public class Bord {
             }
         }
     }
-    
-    
+
+    public bool HeeftLegeVakjes() {
+        for (var rij = 1; rij < _rij; rij++) {
+            for (var kolom = 1; kolom < _kolom; kolom++) {
+                if (Vakken[rij, kolom].Type == Type.Leeg) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

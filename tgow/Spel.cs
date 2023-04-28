@@ -4,8 +4,8 @@ using tgow.Actors;
 namespace tgow; 
 
 public class Spel {
-    public bool IsSpelVoorbij => false;
-    private Bord Bord { get; }
+    public bool IsSpelVoorbij { get; private set; } = false;
+    public Bord Bord { get; }
     public Stapel<Bord> HuidigBordStaat = new Stapel<Bord>();
     private bool SpelerEenBeurt { get; set; } = true;
     public Speler[] Spelers = new Speler[2];
@@ -16,15 +16,14 @@ public class Spel {
 
     public void InitialiseerSpel() {
         Bord.InitialiseerBord();
-        Bord.InitialiseerSpelers("w" ,  "[ B ]");
+        Bord.InitialiseerSpelers("[ H ]" ,  "[ B ]");
         Spelers[0] = new Mens(Type.Hoodie, Bord);
         Spelers[1] = new Ai(Type.BaggySweater,Bord);
     }
     
     public void SpeelBeurt() {
         var beurtVoorbij = false;
-        while (!beurtVoorbij) {
-            //Speler beurt
+        while (!beurtVoorbij && !IsSpelVoorbij) {
             Console.Clear();
 
             Bord.HuidigBord();
@@ -53,14 +52,18 @@ public class Spel {
                         }
                         IsKeuzeValide = true;
                         ((Mens)Spelers[0]).DoeZet(selectieRij, selectieKolom, selectieRij2, selectieKolom2);
+                        beurtVoorbij = true;
+                        SpelerEenBeurt = false;
                     }
                 }
                 catch (FormatException) {}
-            }
-            else {
+            } else {
                 //Computer beurt
-                ((Ai)Spelers[1]).DoeZet();
+                ((Ai)Spelers[1]).BepaalZet();
                 Console.WriteLine("Computer maakt een zet...");
+                Thread.Sleep(1000);
+                beurtVoorbij = true;
+                SpelerEenBeurt = true;
             }
         }
     }
@@ -82,28 +85,34 @@ public class Spel {
             return false;
         }
     }
-
-    public bool IsGeldigPad(int startRij, int startKolom, int eindRij, int eindKolom)
-    {
-        var afstandRij = Math.Abs(eindRij - startRij);
-        var afstandKolom = Math.Abs(eindKolom - startKolom);
-
-        if (afstandRij > 2 || afstandKolom > 2 || afstandRij + afstandKolom != 3) {
-            return false;
+    
+    public void CheckSpelStatus() {
+        
+        if (!Bord.HeeftLegeVakjes())
+        {
+            IsSpelVoorbij = true;
         }
 
-        if (afstandRij == 2 || afstandKolom == 2) {
-            Bord.Vakken[startRij, startKolom].Type = Type.Leeg;
-        }
-        else {
-            var nieuwRij = (startRij + eindRij) / 2;
-            var nieuwKolom = (startKolom + eindKolom) / 2;
-            Bord.Vakken[nieuwRij, nieuwKolom].Type = Bord.Vakken[startRij, startKolom].Type;
+        var spelerTotaal = 0;
+        var aiTotaal = 0;
+
+        foreach (var vak in Bord.Vakken) {
+            switch (vak.Type) {
+                case Type.Hoodie:
+                    spelerTotaal++;
+                    break;
+                case Type.BaggySweater:
+                    aiTotaal++;
+                    break;
+                case Type.Zijkant:
+                    break;
+                default:
+                    break;
+            }
         }
 
-        Bord.Vakken[eindRij, eindKolom].Type = Bord.Vakken[startRij, startKolom].Type;
-        Bord.Vakken[startRij, startKolom].Type = Type.Leeg;
-
-        return true;
+        if (spelerTotaal == 0 || aiTotaal == 0) {
+            IsSpelVoorbij = true;
+        }
     }
 }

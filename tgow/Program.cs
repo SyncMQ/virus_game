@@ -9,9 +9,27 @@ public static class Program {
 
         while (!spel.IsSpelVoorbij) {
             spel.SpeelBeurt();
+            spel.CheckSpelStatus();
         }
 
-        Console.WriteLine(spel.Spelers[0].TotaalBezet > spel.Spelers[1].TotaalBezet
+        var spelerTotaal = 0;
+        var aiTotaal = 0;
+        
+        foreach (var vak in spel.Bord.Vakken) {
+            switch (vak.Type) {
+                case Type.Hoodie:
+                    spelerTotaal++;
+                    break;
+                case Type.BaggySweater:
+                    aiTotaal++;
+                    break;
+                case Type.Zijkant:
+                    break;
+                default:
+                    break;
+            }
+        }
+        Console.WriteLine(spelerTotaal > aiTotaal
             ? "Speler 1 wint!"
             : "Computer wint!");
     }
