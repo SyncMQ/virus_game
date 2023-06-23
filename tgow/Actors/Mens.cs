@@ -15,27 +15,27 @@ public class Mens : Speler {
 
         switch (Math.Abs(y2 - y1)) {
             case 0 when Math.Abs(x2 - x1) == 1:
-                _bord.Vakken[y2, x2].Type = _bord.Vakken[y1, x1].Type;
-                _bord.Vakken[y2, x2].Waarde = _bord.Vakken[y1, x1].Waarde;
+                Bord.Vakken[y2, x2].Type = Bord.Vakken[y1, x1].Type;
+                Bord.Vakken[y2, x2].Waarde = Bord.Vakken[y1, x1].Waarde;
                 Infecteer(y2,x2);
                 break;
             case 1 when Math.Abs(x2 - x1) == 1 || Math.Abs(x2 - x1) == 0:
-                _bord.Vakken[y2, x2].Type = _bord.Vakken[y1, x1].Type;
-                _bord.Vakken[y2, x2].Waarde = _bord.Vakken[y1, x1].Waarde;
+                Bord.Vakken[y2, x2].Type = Bord.Vakken[y1, x1].Type;
+                Bord.Vakken[y2, x2].Waarde = Bord.Vakken[y1, x1].Waarde;
                 Infecteer(y2,x2);
                 break;
             case 2 when Math.Abs(x2 - x1) <= 2:
-                _bord.Vakken[y2, x2].Type = _bord.Vakken[y1, x1].Type;
-                _bord.Vakken[y2, x2].Waarde = _bord.Vakken[y1, x1].Waarde;
-                _bord.Vakken[y1, x1].Type = Type.Leeg;
-                _bord.Vakken[y1, x1].Waarde = "[ _ ]";
+                Bord.Vakken[y2, x2].Type = Bord.Vakken[y1, x1].Type;
+                Bord.Vakken[y2, x2].Waarde = Bord.Vakken[y1, x1].Waarde;
+                Bord.Vakken[y1, x1].Type = Type.Leeg;
+                Bord.Vakken[y1, x1].Waarde = "[ _ ]";
                 Infecteer(y2,x2);
                 break;
             case 0 when Math.Abs(x2 - x1) == 2:
-                _bord.Vakken[y2, x2].Type = _bord.Vakken[y1, x1].Type;
-                _bord.Vakken[y2, x2].Waarde = _bord.Vakken[y1, x1].Waarde;
-                _bord.Vakken[y1, x1].Type = Type.Leeg;
-                _bord.Vakken[y1, x1].Waarde = "[ _ ]";
+                Bord.Vakken[y2, x2].Type = Bord.Vakken[y1, x1].Type;
+                Bord.Vakken[y2, x2].Waarde = Bord.Vakken[y1, x1].Waarde;
+                Bord.Vakken[y1, x1].Type = Type.Leeg;
+                Bord.Vakken[y1, x1].Waarde = "[ _ ]";
                 Infecteer(y2,x2);
                 break;
             default:
@@ -51,13 +51,13 @@ public class Mens : Speler {
             var newY = y2 + dy[i];
             var newX = x2 + dx[i];
 
-            if (!IsGeldigeCoordinaat(newY, newX) || _bord.Vakken[newY, newX].Type != Type.BaggySweater) continue;
-            _bord.Vakken[newY, newX].Type = Type.Hoodie;
-            _bord.Vakken[newY, newX].Waarde = "[ H ]";
+            if (!IsGeldigeCoordinaat(newY, newX) || Bord.Vakken[newY, newX].Type != Type.BaggySweater) continue;
+            Bord.Vakken[newY, newX].Type = Type.Hoodie;
+            Bord.Vakken[newY, newX].Waarde = "[ H ]";
         }
     }
     
     private bool IsGeldigeCoordinaat(int y, int x) {
-        return y >= 0 && y < _bord.Vakken.GetLength(0) && x >= 0 && x < _bord.Vakken.GetLength(1);
+        return y >= 0 && y < Bord.Vakken.GetLength(0) && x >= 0 && x < Bord.Vakken.GetLength(1);
     }
 }

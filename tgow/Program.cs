@@ -29,6 +29,7 @@ public static class Program {
                     break;
             }
         }
+        spel.Bord.HuidigBord();
         Console.WriteLine(spelerTotaal > aiTotaal
             ? "Speler 1 wint!"
             : "Computer wint!");

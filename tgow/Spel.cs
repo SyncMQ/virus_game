@@ -26,10 +26,8 @@ public class Spel {
         while (!beurtVoorbij && !IsSpelVoorbij) {
             Console.Clear();
 
-            HuidigBordStaat.Duw((Bord)Bord.Clone());
-            
             Bord.HuidigBord();
-            Console.Write(HuidigBordStaat.IsLeeg());
+            HuidigBordStaat.Duw((Bord)Bord.Clone());
             if (SpelerEenBeurt && !beurtVoorbij) {
                 Console.WriteLine("Speler 1, kies een [ H ]oodie vak.");
                 Console.WriteLine("Rij: ");
@@ -38,8 +36,9 @@ public class Spel {
                 var selectieKolom = Console.ReadLine();
                 if (selectieRij == "terug" || selectieKolom == "terug" && !HuidigBordStaat.IsLeeg()) {
                     Bord = HuidigBordStaat.Pak();
-                    Bord.HuidigBord();
                     Bord = HuidigBordStaat.Pak();
+                    Spelers[0].Bord = Bord;
+                    Spelers[1].Bord = Bord;
                     continue;
                 }
                 try {
@@ -69,6 +68,8 @@ public class Spel {
             } else {
                 //Computer beurt
                 ((Ai)Spelers[1]).BepaalZet();
+                Console.WriteLine("Computer maakt een zet...");
+                Thread.Sleep(100);
                 beurtVoorbij = true;
                 SpelerEenBeurt = true;
             }
