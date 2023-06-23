@@ -5,7 +5,7 @@ namespace tgow;
 
 public class Spel {
     public bool IsSpelVoorbij { get; private set; } = false;
-    public Bord Bord { get; }
+    public Bord Bord { get; set; }
     public Stapel<Bord> HuidigBordStaat = new Stapel<Bord>();
     private bool SpelerEenBeurt { get; set; } = true;
     public Speler[] Spelers = new Speler[2];
@@ -26,13 +26,22 @@ public class Spel {
         while (!beurtVoorbij && !IsSpelVoorbij) {
             Console.Clear();
 
+            HuidigBordStaat.Duw((Bord)Bord.Clone());
+            
             Bord.HuidigBord();
+            Console.Write(HuidigBordStaat.IsLeeg());
             if (SpelerEenBeurt && !beurtVoorbij) {
                 Console.WriteLine("Speler 1, kies een [ H ]oodie vak.");
                 Console.WriteLine("Rij: ");
                 var selectieRij = Console.ReadLine();
                 Console.WriteLine("Kolom: ");
                 var selectieKolom = Console.ReadLine();
+                if (selectieRij == "terug" || selectieKolom == "terug" && !HuidigBordStaat.IsLeeg()) {
+                    Bord = HuidigBordStaat.Pak();
+                    Bord.HuidigBord();
+                    Bord = HuidigBordStaat.Pak();
+                    continue;
+                }
                 try {
                     if (!IsValideSelectie(Convert.ToInt32(selectieRij), Convert.ToInt32(selectieKolom))) continue;
                     var IsKeuzeValide = false;
@@ -60,8 +69,6 @@ public class Spel {
             } else {
                 //Computer beurt
                 ((Ai)Spelers[1]).BepaalZet();
-                Console.WriteLine("Computer maakt een zet...");
-                Thread.Sleep(1000);
                 beurtVoorbij = true;
                 SpelerEenBeurt = true;
             }

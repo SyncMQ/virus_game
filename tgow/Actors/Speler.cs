@@ -1,8 +1,7 @@
 namespace tgow.Actors;
 
 public abstract class Speler {
-    public Type Type { get; set; } 
-    public int TotaalBezet { get; set; } = 4;
+    public Type Type { get; set; }
     protected readonly Bord _bord;
     
 

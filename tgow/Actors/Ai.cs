@@ -28,9 +28,10 @@ public class Ai : Speler {
             }
         }
         
-        // X% kans om een willekeurige zet te kiezen waarvan X de willekeurig variabel is dat bepaald wat de AI doet
-        // Y% kans om de beste zet te kiezen waarvan Y de kans is dat de AI de beste zet uitvoert
-        if (_random.Next(0, 100) < 55) {
+        
+        // X% kans om een willekeurige zet te kiezen waarvan X de willekeurig variabel is dat bepaald wat de AI doet;
+        // Y% kans om de beste zet te kiezen waarvan Y de kans is dat de AI de beste zet uitvoert. 
+        if (_random.Next(0, 100) < 100) {
             if (besteStartVakje == null || besteDoelVakje == null) return;
             // Voer de zet met de hoogste score uit.
             DoeZet(besteStartVakje.Item1, besteStartVakje.Item2, besteDoelVakje.Item1, besteDoelVakje.Item2);
@@ -42,7 +43,6 @@ public class Ai : Speler {
             var willekeurigeZet = mogelijkeZetten[_random.Next(mogelijkeZetten.Count)];
             DoeZet(willekeurigeBaggySweaterVakje.Item1, willekeurigeBaggySweaterVakje.Item2, willekeurigeZet.Item1,
                 willekeurigeZet.Item2);
-
         }
     }
 
@@ -51,13 +51,11 @@ public class Ai : Speler {
             case 0 when Math.Abs(x2 - x1) == 1:
                 _bord.Vakken[y2, x2].Type = _bord.Vakken[y1, x1].Type;
                 _bord.Vakken[y2, x2].Waarde = _bord.Vakken[y1, x1].Waarde;
-                TotaalBezet += 1;
                 Infecteer(y2,x2);
                 break;
             case 1 when Math.Abs(x2 - x1) == 1 || Math.Abs(x2 - x1) == 0:
                 _bord.Vakken[y2, x2].Type = _bord.Vakken[y1, x1].Type;
                 _bord.Vakken[y2, x2].Waarde = _bord.Vakken[y1, x1].Waarde;
-                TotaalBezet += 1;
                 Infecteer(y2,x2);
                 break;
             case 1 when Math.Abs(x2 - x1) == 2:
@@ -154,7 +152,7 @@ public class Ai : Speler {
             var newY = y1 + dy[i];
             var newX = x1 + dx[i];
 
-            if (IsGeldigeCoordinaat(newY, newX) && _bord.Vakken[newY, newX].Type is Type.Leeg or Type.Hoodie) {
+            if (IsGeldigeCoordinaat(newY, newX) && _bord.Vakken[newY, newX].Type is Type.Leeg) {
                 mogelijkeZetten.Add(new Tuple<int, int>(newY, newX));
             }
         }

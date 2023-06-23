@@ -1,6 +1,6 @@
 namespace tgow; 
 
-public class Vak {
+public class Vak : ICloneable {
     public string Waarde { get; set; }
     public Type Type { get; set; }
     
@@ -13,5 +13,8 @@ public class Vak {
         return Type == Type.Zijkant ? $"[ {Waarde} ]" : Waarde;
     }
 
+    public object Clone() {
+        return new Vak(Waarde, Type);
+    }
     
 }

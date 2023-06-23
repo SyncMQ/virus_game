@@ -1,8 +1,9 @@
 using System.IO.Compression;
+using System.Net.NetworkInformation;
 
 namespace tgow; 
 
-public class Bord {
+public class Bord : ICloneable {
     private readonly int _rij;
     private readonly int _kolom;
     public Vak[,] Vakken { get; }
@@ -12,7 +13,7 @@ public class Bord {
         _kolom = kolom+1;
         Vakken = new Vak[_rij,_kolom];
     }
-    
+
     public void HuidigBord() {
         for (var y = 0; y < _rij; y++) {
             var rij = "";
@@ -65,5 +66,15 @@ public class Bord {
             }
         }
         return false;
+    }
+    
+    public object Clone() {
+        var kopie = new Bord(_rij - 1, _kolom - 1);
+        for (var i = 0; i < _rij; i++) {
+            for (var j = 0; j < _kolom; j++) {
+                kopie.Vakken[i, j] = (Vak)Vakken[i, j].Clone();
+            }
+        }
+        return kopie;
     }
 }

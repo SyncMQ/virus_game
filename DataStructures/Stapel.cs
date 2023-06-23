@@ -21,6 +21,11 @@ public class Stapel<T> {
         return _length;
     }
 
+    public bool IsLeeg()
+    {
+        return _length == 0;
+    }
+
     private class Node {
         
         private T _inhoud;

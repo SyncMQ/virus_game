@@ -17,13 +17,11 @@ public class Mens : Speler {
             case 0 when Math.Abs(x2 - x1) == 1:
                 _bord.Vakken[y2, x2].Type = _bord.Vakken[y1, x1].Type;
                 _bord.Vakken[y2, x2].Waarde = _bord.Vakken[y1, x1].Waarde;
-                TotaalBezet += 1;
                 Infecteer(y2,x2);
                 break;
             case 1 when Math.Abs(x2 - x1) == 1 || Math.Abs(x2 - x1) == 0:
                 _bord.Vakken[y2, x2].Type = _bord.Vakken[y1, x1].Type;
                 _bord.Vakken[y2, x2].Waarde = _bord.Vakken[y1, x1].Waarde;
-                TotaalBezet += 1;
                 Infecteer(y2,x2);
                 break;
             case 2 when Math.Abs(x2 - x1) <= 2:
