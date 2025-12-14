@@ -41,14 +41,13 @@ public class Bord : ICloneable {
     }
 
     public void InitialiseerSpelers(string spelerEen, string spelerTwee) {
-        //Speler 1 is linksonder
+        //editor notitie: speler 1 is linksonder & Speler 2 is rechtsboven in het spel*
         for (var rij = _rij - 1; rij >= _rij - 2; rij--) {
             for (var kolom = 1; kolom < 3; kolom++) {
                 Vakken[rij, kolom].Waarde = spelerEen;
                 Vakken[rij, kolom].Type = Type.Hoodie;
             }
         }
-        //Speler 2 is rechtsboven
         for (var rij = 1; rij < 3; rij++) {
             for (var kolom = _kolom - 1; kolom >= _kolom - 2; kolom--) {
                 Vakken[rij, kolom].Waarde = spelerTwee;
